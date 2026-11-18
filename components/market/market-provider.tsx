@@ -21,7 +21,7 @@ export function MarketPrice({ prices, indicative = false }: { prices?: Partial<R
   const { market } = useMarket();
   const { currency, locale } = MARKETS[market];
   const value = prices?.[currency];
-  if (value == null) return <span>Prix à venir</span>;
+  if (value == null) return <span>Prix non renseigné</span>;
   const formatted = new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 2 }).format(value);
   return <span>{indicative && <span className="sr-only">Prix de démonstration : </span>}{formatted}{indicative && <span className="market-demo-suffix"> · démo</span>}</span>;
 }
