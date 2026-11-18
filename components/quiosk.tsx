@@ -80,7 +80,31 @@ export function SiteHeader() {
   </>;
 }
 export function SiteFooter() { return <footer><EditorialContainer><div className="footer-main"><div><Link href="/" className="footer-brand" aria-label="Quiosk, accueil"><Image src="/quiosk-logo-dark.png" alt="Quiosk — Books & Magazines" width={1901} height={537} /></Link><p>Le kiosque des regards<br />qui comptent.</p></div><div className="footer-nav"><div><span>Explorer</span><Link href="/#une">À la une</Link><Link href="/#univers">Catégories</Link><Link href="/#derniers">Derniers numéros</Link></div><div><span>Quiosk</span><Link href="/#experience">Notre expérience</Link><Link href="/#journal">Le journal</Link><Link href="/#newsletter">Nous contacter</Link></div><div><span>Suivre</span><a href="#">Instagram</a><a href="#">Pinterest</a><a href="#">LinkedIn</a></div></div></div><div className="footer-bottom"><span>© 2026 Quiosk</span><span>Paris · Alger · Le monde</span><div><a href="#">Confidentialité</a><a href="#">Accessibilité</a></div></div></EditorialContainer></footer>; }
-export function NewsletterForm() { const [done, setDone] = useState(false); const submit = (event: FormEvent) => { event.preventDefault(); setDone(true); }; return <form className="newsletter-form" onSubmit={submit}>{done ? <p className="form-success"><Check /> Merci, votre prochaine lecture arrive bientôt.</p> : <><label htmlFor="newsletter-email">Votre adresse e-mail</label><div><input id="newsletter-email" type="email" required placeholder="vous@exemple.fr" /><button aria-label="S'inscrire à la newsletter"><ArrowRight /></button></div><small>Deux lettres par mois, sans bruit inutile. Désinscription en un clic.</small></>}</form>; }
-export function MagazineGallery({ magazine }: { magazine: Magazine }) { const [view, setView] = useState(0); const labels = ["Couverture", "Ouverture", "Sommaire", "Portfolio"]; return <div className="gallery"><motion.div key={view} initial={{ opacity: 0, scale: .985 }} animate={{ opacity: 1, scale: 1 }}><MagazineCover magazine={magazine} priority view={view} /></motion.div><div className="gallery-thumbs" aria-label="Aperçus du magazine">{labels.map((label, index) => <button key={label} className={view === index ? "active" : ""} onClick={() => setView(index)} aria-pressed={view === index}><MagazineCover magazine={magazine} view={index} /><span>{label}</span></button>)}</div></div>; }
-export function MagazinePurchasePanel({ magazine }: { magazine: Magazine }) { const [choice, setChoice] = useState<"issue" | "subscription">("issue"); const [added, setAdded] = useState(false); return <div className="purchase-panel"><Link href="/" className="back-link"><ArrowLeft size={15} /> Retour aux magazines</Link><p className="breadcrumbs">Magazines / {magazine.category} / {magazine.title}</p><EditorialBadge>Choix de la rédaction</EditorialBadge><h1>{magazine.title}</h1><h2>{magazine.issue}</h2><p className="publisher">Par {magazine.publisher} · {magazine.date}</p><p className="description">{magazine.description}</p><div className="purchase-options"><button className={choice === "issue" ? "selected" : ""} onClick={() => setChoice("issue")}><span>Achat à l’unité</span><strong>{formatPrice(magazine.price)}</strong><small>Accès permanent à ce numéro</small></button><button className={choice === "subscription" ? "selected" : ""} onClick={() => setChoice("subscription")}><span>Abonnement Quiosk</span><strong>9,90 € / mois</strong><small>Ce titre et plus de 80 magazines</small></button></div><button className="buy-button" onClick={() => setAdded(true)}>{added ? <><Check /> Ajouté à votre panier</> : choice === "issue" ? <>Acheter ce numéro <ArrowRight /></> : <>S’abonner <ArrowRight /></>}</button><button className="preview-button"><BookOpen /> Feuilleter un extrait</button><dl className="issue-meta"><div><dt>Langue</dt><dd>Français</dd></div><div><dt>Format</dt><dd>Numérique · 148 pages</dd></div><div><dt>Lecture</dt><dd>Web, tablette et mobile</dd></div></dl></div>; }
+export function NewsletterForm() { const [done, setDone] = useState(false); const submit = (event: FormEvent) => { event.preventDefault(); setDone(true); }; return <form className="newsletter-form" onSubmit={submit}>{done ? <p className="form-success"><Check /> L’inscription sera disponible prochainement. Votre adresse n’a pas été envoyée.</p> : <><label htmlFor="newsletter-email">Votre adresse e-mail</label><div><input id="newsletter-email" type="email" required placeholder="vous@exemple.fr" /><button aria-label="S'inscrire à la newsletter"><ArrowRight /></button></div><small>Deux lettres par mois, sans bruit inutile. Désinscription en un clic.</small></>}</form>; }
+export function MagazineGallery({ magazine }: { magazine: Magazine }) {
+  return <div className="gallery">
+    <MagazineCover magazine={magazine} priority />
+    <p className="q-caption">Aperçu de la couverture uniquement. Les pages intérieures ne sont pas encore disponibles.</p>
+  </div>;
+}
+
+export function MagazinePurchasePanel({ magazine }: { magazine: Magazine }) {
+  return <div className="purchase-panel">
+    <Link href="/#magazines" className="back-link"><ArrowLeft size={15} /> Retour aux magazines</Link>
+    <p className="breadcrumbs">Magazines / {magazine.category} / {magazine.title}</p>
+    <EditorialBadge>Sélection de démonstration</EditorialBadge>
+    <h1>{magazine.title}</h1>
+    <h2>{magazine.issue}</h2>
+    <p className="publisher">Par {magazine.publisher} · {magazine.date}</p>
+    <p className="description">{magazine.description}</p>
+    <div className="purchase-options" aria-label="Disponibilité commerciale">
+      <div className="selected"><span>Achat à l’unité</span><strong>À venir</strong><small>Prix et droits d’accès à confirmer</small></div>
+      <div><span>Abonnement Quiosk</span><strong>À venir</strong><small>Formules en cours de définition</small></div>
+    </div>
+    <p className="q-caption" role="status">Catalogue de démonstration : l’achat et la lecture ne sont pas encore activés.</p>
+    <button className="buy-button" type="button" disabled aria-disabled="true">Achat indisponible pour le moment</button>
+    <button className="preview-button" type="button" disabled aria-disabled="true"><BookOpen /> Extrait bientôt disponible</button>
+    <dl className="issue-meta"><div><dt>Éditeur</dt><dd>{magazine.publisher}</dd></div><div><dt>Catégorie</dt><dd>{magazine.category}</dd></div><div><dt>Lecture</dt><dd>À venir</dd></div></dl>
+  </div>;
+}
 export function PageReveal({ children }: { children: ReactNode }) { const reduce = useReducedMotion(); return <motion.div initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .55 }}>{children}</motion.div>; }
