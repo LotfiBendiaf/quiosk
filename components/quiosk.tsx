@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FormEvent, ReactNode, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronLeft, ChevronRight, Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronLeft, ChevronRight, Menu, Search, UserRound, X } from "lucide-react";
 import { Magazine } from "@/lib/magazines";
 import { MarketSelector } from "@/components/market/market-selector";
 import { CartLink } from "@/components/cart/cart-link";
