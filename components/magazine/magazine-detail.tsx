@@ -7,11 +7,21 @@ import { ArrowLeft, ArrowRight, BookOpen, Check, LibraryBig, LockKeyhole, Sparkl
 import type { Magazine } from "@/lib/magazines";
 import { MarketPrice } from "@/components/market/market-provider";
 import { demoSubscriptionPrices } from "@/lib/pricing";
+import { useCart } from "@/components/cart/cart-provider";
+import { useRouter } from "next/navigation";
 
 type PurchaseMode = "issue" | "subscription";
 
 export function MagazineDetail({ magazine }: { magazine: Magazine }) {
   const [mode, setMode] = useState<PurchaseMode>("issue");
+  const { addIssue, addSubscription, has } = useCart();
+  const router = useRouter();
+  const isInCart = has(mode === "issue" ? `issue:${magazine.slug}` : "subscription:quiosk");
+  function addToCart() {
+    if (mode === "issue") addIssue(magazine.slug);
+    else addSubscription();
+    router.push("/panier");
+  }
   const isIssue = mode === "issue";
   const currentPrices = isIssue ? magazine.prices : demoSubscriptionPrices;
 
@@ -37,7 +47,7 @@ export function MagazineDetail({ magazine }: { magazine: Magazine }) {
 
       <div className="qd-commerce">
         <div className="qd-commerce__heading"><span>Choisissez votre expérience</span><span>01 / 02</span></div>
-        <div className="qd-options" role="radiogroup" aria-label="Mode d'acquisition du magazine">
+        <div className="qd-options" role="group" aria-label="Mode d'acquisition du magazine">
           <button type="button" aria-pressed={isIssue} className={`qd-option ${isIssue ? "is-active" : ""}`} onClick={() => setMode("issue")}>
             <span className="qd-option__top"><span className="qd-radio" aria-hidden="true">{isIssue && <Check size={12}/>}</span><span className="qd-option__name">Acheter ce numéro</span></span>
             <strong className="qd-option__price"><MarketPrice prices={magazine.prices} indicative /></strong>
@@ -67,11 +77,11 @@ export function MagazineDetail({ magazine }: { magazine: Magazine }) {
               "Conditions d’accès communiquées au lancement",
             ]).map(label => <li key={label}><Check size={15} aria-hidden="true" />{label}</li>)}
           </ul>
-          <button type="button" className="qd-main-cta" disabled aria-disabled="true">
-            {isIssue ? "Acheter ce numéro" : "Choisir cet abonnement"}
+          <button type="button" className="qd-main-cta" onClick={addToCart}>
+            {isInCart ? "Voir dans mon panier" : isIssue ? "Ajouter ce numéro au panier" : "Ajouter l’abonnement au panier"}
             <ArrowRight size={18} aria-hidden="true" />
           </button>
-          <p className="qd-unavailable"><LockKeyhole size={14} aria-hidden="true" /> Démonstration : {isIssue ? "achats" : "abonnements"} non disponibles actuellement.</p>
+          <p className="qd-unavailable"><LockKeyhole size={14} aria-hidden="true" /> Panier de démonstration : aucun paiement ou droit de lecture n’est activé.</p>
         </div>
       </div>
 
