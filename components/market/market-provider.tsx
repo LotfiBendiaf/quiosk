@@ -1,14 +1,35 @@
 "use client";
 
-import { createContext, useContext, useState, type ReactNode } from "react";
-import { DEFAULT_MARKET, MARKETS, type MarketId } from "@/lib/markets";
+import { createContext, useContext, useSyncExternalStore, type ReactNode } from "react";
+import { DEFAULT_MARKET, isMarketId, MARKETS, MARKET_STORAGE_KEY, type MarketId } from "@/lib/markets";
 
 type MarketContextValue = { market: MarketId; setMarket: (value: MarketId) => void };
 const MarketContext = createContext<MarketContextValue | null>(null);
+const MARKET_CHANGE_EVENT = "quiosk:market-change";
 
 export function MarketProvider({ initialMarket = DEFAULT_MARKET, children }: { initialMarket?: MarketId; children: ReactNode }) {
-  const [market, setMarket] = useState<MarketId>(initialMarket);
-  return <MarketContext.Provider value={{ market, setMarket }}>{children}</MarketContext.Provider>;
+  const market = useSyncExternalStore(
+    (onStoreChange) => {
+      window.addEventListener("storage", onStoreChange);
+      window.addEventListener(MARKET_CHANGE_EVENT, onStoreChange);
+      return () => {
+        window.removeEventListener("storage", onStoreChange);
+        window.removeEventListener(MARKET_CHANGE_EVENT, onStoreChange);
+      };
+    },
+    () => {
+      const savedMarket = window.localStorage.getItem(MARKET_STORAGE_KEY);
+      return isMarketId(savedMarket) ? savedMarket : initialMarket;
+    },
+    () => initialMarket,
+  );
+
+  function selectMarket(value: MarketId) {
+    window.localStorage.setItem(MARKET_STORAGE_KEY, value);
+    window.dispatchEvent(new Event(MARKET_CHANGE_EVENT));
+  }
+
+  return <MarketContext.Provider value={{ market, setMarket: selectMarket }}>{children}</MarketContext.Provider>;
 }
 
 export function useMarket() {

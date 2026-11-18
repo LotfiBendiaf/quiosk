@@ -1,9 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { Check, ChevronDown } from "lucide-react";
-import { selectQuioskMarket } from "@/app/actions/market";
 import { MARKETS, type MarketId } from "@/lib/markets";
 import { useMarket } from "./market-provider";
 
@@ -23,9 +21,7 @@ function MarketFlag({ market }: { market: MarketId }) {
 export function MarketSelector() {
   const { market, setMarket } = useMarket();
   const [open, setOpen] = useState(false);
-  const [pending, startTransition] = useTransition();
   const root = useRef<HTMLDivElement>(null);
-  const router = useRouter();
 
   useEffect(() => {
     if (!open) return;
@@ -39,15 +35,11 @@ export function MarketSelector() {
   function choose(next: MarketId) {
     setOpen(false);
     if (next === market) return;
-    startTransition(async () => {
-      const saved = await selectQuioskMarket(next);
-      setMarket(saved);
-      router.refresh();
-    });
+    setMarket(next);
   }
 
   return <div className="q-market" ref={root}>
-    <button type="button" className="q-market__trigger" aria-label={`Marché : ${MARKETS[market].name} (${MARKETS[market].currency}). Changer de marché`} aria-haspopup="menu" aria-expanded={open} aria-controls="quiosk-market-menu" disabled={pending} onClick={() => setOpen(v => !v)}>
+    <button type="button" className="q-market__trigger" aria-label={`Marché : ${MARKETS[market].name} (${MARKETS[market].currency}). Changer de marché`} aria-haspopup="menu" aria-expanded={open} aria-controls="quiosk-market-menu" onClick={() => setOpen(v => !v)}>
       <MarketFlag market={market} /><ChevronDown aria-hidden="true" size={14} />
     </button>
     {open && <div className="q-market__popover" role="menu" id="quiosk-market-menu" aria-label="Choisir votre marché">

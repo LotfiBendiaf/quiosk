@@ -8,7 +8,7 @@ export type MarketId = keyof typeof MARKETS;
 export type MarketCurrency = (typeof MARKETS)[MarketId]["currency"];
 export type MarketPrices = Partial<Record<MarketCurrency, number>>;
 export const DEFAULT_MARKET: MarketId = "algerie";
-export const MARKET_COOKIE = "quiosk_market";
+export const MARKET_STORAGE_KEY = "quiosk_market";
 export const isMarketId = (value: unknown): value is MarketId =>
   typeof value === "string" && Object.prototype.hasOwnProperty.call(MARKETS, value);
 export function formatMarketPrice(amount: number, market: MarketId): string {
