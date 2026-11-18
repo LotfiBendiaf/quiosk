@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
+import { Menu, Search, UserRound, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { MarketSelector } from "@/components/market/market-selector";
