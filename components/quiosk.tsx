@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronLeft, ChevronRight, Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
 import { Magazine } from "@/lib/magazines";
 import { MarketSelector } from "@/components/market/market-selector";
+import { CartLink } from "@/components/cart/cart-link";
 import { MarketPrice } from "@/components/market/market-provider";
 import { demoSubscriptionPrices } from "@/lib/pricing";
 
@@ -55,7 +56,7 @@ export function SiteHeader() {
           {headerLinks.map(([label, href]) => <Link key={label} href={href} onClick={() => setOpen(false)}>{label}</Link>)}
           <Link className="mobile-universes-link" href="/#categories" onClick={() => setOpen(false)}>Nos univers</Link>
         </nav>
-        <div className="header-tools"><MarketSelector /><button aria-label="Rechercher"><Search /></button><Link className="header-tool-link" href="/auth?mode=login" aria-label="Mon compte"><UserRound /></Link><button aria-label="Panier"><ShoppingBag /></button><button className="nav-toggle" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}>{open ? <X /> : <Menu />}</button></div>
+        <div className="header-tools"><MarketSelector /><button aria-label="Rechercher"><Search /></button><Link className="header-tool-link" href="/auth?mode=login" aria-label="Mon compte"><UserRound /></Link><CartLink /><button className="nav-toggle" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}>{open ? <X /> : <Menu />}</button></div>
       </div>
     </header>
     <nav className={`universe-nav${universeNavHidden ? " is-hidden" : ""}`} aria-label="Nos univers" aria-hidden={universeNavHidden} inert={universeNavHidden ? true : undefined} onMouseLeave={() => setActiveUniverse(null)}>
