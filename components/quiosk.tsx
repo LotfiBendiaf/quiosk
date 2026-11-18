@@ -99,6 +99,7 @@ export function MagazinePurchasePanel({ magazine }: { magazine: Magazine }) {
     <h2>{magazine.issue}</h2>
     <p className="publisher">Par {magazine.publisher} · {magazine.date}</p>
     <p className="description">{magazine.description}</p>
+    {magazine.prices && <p className="publisher">Prix de démonstration : <MarketPrice prices={magazine.prices} indicative /></p>}
     <div className="purchase-options" aria-label="Disponibilité commerciale">
       <div className="selected"><span>Achat à l’unité</span><strong>À venir</strong><small>Prix et droits d’accès à confirmer</small></div>
       <div><span>Abonnement Quiosk</span><strong>À venir</strong><small>Formules en cours de définition</small></div>
