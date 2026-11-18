@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Magazine } from "@/lib/magazines";
-import { formatPrice } from "@/lib/magazines";
+import { MarketPrice } from "@/components/market/market-provider";
 import { cn } from "@/lib/utils";
 
 export function MagazineCover({ magazine, className, priority = false }: { magazine: Magazine; className?: string; priority?: boolean; view?: number }) {
@@ -20,7 +20,7 @@ export function MagazineCard({ magazine, featured = false }: { magazine: Magazin
         <MagazineCover magazine={magazine} />
         <span className="q-cover-action">Voir le numéro <ArrowRight aria-hidden="true" size={15} /></span>
       </Link>
-      <div className="q-magazine-card__meta"><span>{magazine.category}</span>{magazine.price != null && <span>{formatPrice(magazine.price)}</span>}</div>
+      <div className="q-magazine-card__meta"><span>{magazine.category}</span>{magazine.prices && <span><MarketPrice prices={magazine.prices} indicative={magazine.demoOnly} /></span>}</div>
       <h3 className="q-h3"><Link href={`/magazines/${magazine.slug}`}>{magazine.title}</Link></h3>
       <p className="q-caption">{magazine.issue}</p>
     </article>
