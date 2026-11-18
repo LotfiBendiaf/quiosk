@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronLeft, ChevronRight, Menu
 import { Magazine } from "@/lib/magazines";
 import { MarketSelector } from "@/components/market/market-selector";
 import { MarketPrice } from "@/components/market/market-provider";
+import { demoSubscriptionPrices } from "@/lib/pricing";
 
 export function EditorialContainer({ children, className = "" }: { children: ReactNode; className?: string }) { return <div className={`container ${className}`}>{children}</div>; }
 export function EditorialBadge({ children }: { children: ReactNode }) { return <span className="editorial-badge">{children}</span>; }
@@ -99,10 +100,9 @@ export function MagazinePurchasePanel({ magazine }: { magazine: Magazine }) {
     <h2>{magazine.issue}</h2>
     <p className="publisher">Par {magazine.publisher} · {magazine.date}</p>
     <p className="description">{magazine.description}</p>
-    {magazine.prices && <p className="publisher">Prix de démonstration : <MarketPrice prices={magazine.prices} indicative /></p>}
     <div className="purchase-options" aria-label="Disponibilité commerciale">
-      <div className="selected"><span>Achat à l’unité</span><strong>À venir</strong><small>Prix et droits d’accès à confirmer</small></div>
-      <div><span>Abonnement Quiosk</span><strong>À venir</strong><small>Formules en cours de définition</small></div>
+      <div className="selected"><span>Achat à l’unité</span><strong><MarketPrice prices={magazine.prices} indicative /></strong><small>Tarif indicatif · accès non activé</small></div>
+      <div><span>Abonnement Quiosk</span><strong><MarketPrice prices={demoSubscriptionPrices} indicative /> / mois</strong><small>Tarif indicatif · formule non activée</small></div>
     </div>
     <p className="q-caption" role="status">Catalogue de démonstration : l’achat et la lecture ne sont pas encore activés.</p>
     <button className="buy-button" type="button" disabled aria-disabled="true">Achat indisponible pour le moment</button>
