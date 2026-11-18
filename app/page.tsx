@@ -10,6 +10,7 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { CoverReveal, HeroMotion, HeroReveal, NewsletterForm } from "@/components/home/home-interactions";
 import { algerianEditions, magazines } from "@/lib/magazines";
 import { MarketPrice } from "@/components/market/market-provider";
+import { demoStartingIssuePrices, demoSubscriptionPrices, demoCollectionPrices } from "@/lib/pricing";
 import "./home.css";
 
 const categories = [
@@ -30,9 +31,9 @@ const magazineTitles = [
 ] as const;
 
 const subscriptionPlans = [
-  { name: "À l’unité", prices: { DZD: 1600, EUR: 13.5, USD: 15 }, cadence: "à partir de / numéro", description: "Choisissez uniquement les éditions qui vous intéressent.", features: ["Achat d’un numéro", "Accès selon les droits de l’édition", "Bibliothèque personnelle à venir"], cta: "Être informé", featured: false },
-  { name: "Abonnement", prices: { DZD: 990, EUR: 9.9, USD: 10.9 }, cadence: "par mois", description: "Suivez vos publications préférées avec une formule adaptée.", features: ["Formules en cours de préparation", "Accès défini selon les éditeurs", "Conditions communiquées au lancement"], cta: "Être informé", featured: true },
-  { name: "Collections", prices: { DZD: 1790, EUR: 17.9, USD: 19.9 }, cadence: "par mois", description: "Découvrez des sélections éditoriales imaginées autour de vos passions.", features: ["Sélections thématiques envisagées", "Disponibilité à confirmer", "Tarifs annoncés prochainement"], cta: "Être informé", featured: false },
+  { name: "À l’unité", prices: demoStartingIssuePrices, cadence: "à partir de / numéro", description: "Choisissez uniquement les éditions qui vous intéressent.", features: ["Achat d’un numéro", "Accès selon les droits de l’édition", "Bibliothèque personnelle à venir"], cta: "Être informé", featured: false },
+  { name: "Abonnement", prices: demoSubscriptionPrices, cadence: "par mois", description: "Suivez vos publications préférées avec une formule adaptée.", features: ["Formules en cours de préparation", "Accès défini selon les éditeurs", "Conditions communiquées au lancement"], cta: "Être informé", featured: true },
+  { name: "Collections", prices: demoCollectionPrices, cadence: "par mois", description: "Découvrez des sélections éditoriales imaginées autour de vos passions.", features: ["Sélections thématiques envisagées", "Disponibilité à confirmer", "Tarifs annoncés prochainement"], cta: "Être informé", featured: false },
 ] as const;
 
 function Cta({ href, children, variant = "primary" }: { href: string; children: React.ReactNode; variant?: "primary" | "secondary" | "dark" }) {
