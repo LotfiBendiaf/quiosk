@@ -47,7 +47,7 @@ export default function Home() {
     </HeroMotion></EditorialContainer></section>
 
     <section className="home-press" aria-label="Magazines disponibles sur Quiosk">
-      <p className="home-press__label">Les titres qui inspirent le monde</p>
+      <p className="home-press__label">Inspirations éditoriales · titres présentés à titre d’exemple</p>
       <div className="home-press__viewport">
         <div className="home-press__track">
           <div className="home-press__group" role="list">
@@ -60,7 +60,7 @@ export default function Home() {
       </div>
     </section>
 
-    <section className="home-section home-featured" id="magazines"><EditorialContainer><div className="home-section__intro"><SectionHeading eyebrow="À la une" title="Les numéros qui font" emphasis="l’époque." /><p>Une sélection de regards indépendants, choisie pour sa beauté et la force de ses idées.</p></div><MagazineCarousel magazines={magazines.slice(0, 6)} label="Magazines à la une" /></EditorialContainer></section>
+    <section className="home-section home-featured" id="magazines"><EditorialContainer><div className="home-section__intro"><SectionHeading eyebrow="À la une" title="Les numéros qui font" emphasis="l’époque." /><p>Des couvertures présentées pour illustrer l’univers Quiosk. Les droits de distribution et les numéros disponibles restent à confirmer.</p></div><MagazineCarousel magazines={magazines.slice(0, 6)} label="Magazines à la une" /></EditorialContainer></section>
 
     <section className="home-section home-universes" id="categories"><EditorialContainer><SectionHeading eyebrow="Explorez nos univers" title="Suivez votre" emphasis="curiosité." /><div className="home-universes__grid">{categories.map(([name, image], index) => <Link href="#magazines" className={`home-universe home-universe--${index + 1}`} key={name}><Image src={image} alt="" fill sizes="(max-width: 700px) 90vw, 32vw" /><span>0{index + 1}</span><h3>{name}</h3><ArrowRight aria-hidden="true" /></Link>)}</div></EditorialContainer></section>
 
