@@ -1,120 +1,75 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { FormEvent, useMemo, useState } from "react";
-import { ArrowLeft, ArrowRight, BookOpen, Check, Eye, EyeOff, Library, LockKeyhole } from "lucide-react";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, type FormEvent } from "react";
+import { ArrowLeft, ArrowRight, Eye, EyeOff, LockKeyhole } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
-type AuthMode = "login" | "signup";
-
-const perks = [
-  [Library, "Votre bibliothèque, partout", "Retrouvez vos numéros et vos favoris sur tous vos écrans."],
-  [BookOpen, "Une lecture sans distraction", "Profitez d’un espace calme, pensé pour les belles histoires."],
-] as const;
+type Mode = "login" | "signup";
 
 export function AuthExperience() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const initialMode = searchParams.get("mode") === "signup" ? "signup" : "login";
-  const [mode, setMode] = useState<AuthMode>(initialMode);
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [mode, setMode] = useState<Mode>(searchParams.get("mode") === "signup" ? "signup" : "login");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
 
-  const copy = useMemo(() => mode === "login" ? {
-    eyebrow: "Heureux de vous revoir",
-    title: "Reprenez votre lecture",
-    emphasis: "là où vous l’avez laissée.",
-    submit: "Se connecter",
-    foot: "Nouveau sur Quiosk ?",
-    switchLabel: "Créer un compte",
-  } : {
-    eyebrow: "Bienvenue chez Quiosk",
-    title: "Votre prochaine lecture",
-    emphasis: "commence ici.",
-    submit: "Créer mon compte",
-    foot: "Vous avez déjà un compte ?",
-    switchLabel: "Se connecter",
-  }, [mode]);
-
-  function switchMode(nextMode: AuthMode) {
-    setMode(nextMode);
-    setSubmitted(false);
-    setPasswordVisible(false);
-  }
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!event.currentTarget.reportValidity()) return;
-    setSubmitted(true);
+    if (busy) return;
+    setBusy(true);
+    setError("");
+    try {
+      const result = mode === "login"
+        ? await authClient.signIn.email({ email, password })
+        : await authClient.signUp.email({ name: name.trim(), email, password });
+      if (result.error) {
+        setError(result.error.message ?? "Impossible de poursuivre. Vérifiez vos informations.");
+        return;
+      }
+      router.replace("/dashboard");
+      router.refresh();
+    } catch {
+      setError("Une erreur de connexion s’est produite. Réessayez.");
+    } finally {
+      setBusy(false);
+    }
   }
 
-  if (submitted) {
-    return <main className="auth-shell auth-shell--complete">
-      <section className="auth-complete" aria-live="polite">
-        <Link href="/" className="auth-brand" aria-label="Quiosk, accueil">QUIOSK</Link>
-        <span className="auth-complete__icon"><Check aria-hidden="true" /></span>
-        <p className="auth-eyebrow">{mode === "login" ? "Connexion prête" : "Inscription prête"}</p>
-        <h1>{mode === "login" ? "Bon retour parmi nous." : "Bienvenue dans votre nouvel univers."}</h1>
-        <p>L’interface a validé les informations pour <strong>{email}</strong>. La création de session sera activée dès qu’un service d’authentification sera connecté.</p>
-        <Link href="/" className="auth-primary-link">Retourner à l’accueil <ArrowRight aria-hidden="true" /></Link>
-        <button type="button" onClick={() => setSubmitted(false)}>Modifier mes informations</button>
-      </section>
-    </main>;
+  function changeMode(next: Mode) {
+    setMode(next); setError(""); setPassword(""); setVisible(false);
   }
 
   return <main className="auth-shell">
-    <aside className="auth-story" aria-label="L’expérience Quiosk">
-      <Image src="/images/Mediterranean Terrace Overlooking Algiers-3.png" alt="Terrasse méditerranéenne baignée de lumière" fill loading="eager" sizes="(max-width: 900px) 100vw, 48vw" />
+    <aside className="auth-story">
+      <Image src="/images/Mediterranean Terrace Overlooking Algiers-3.png" alt="Terrasse méditerranéenne ensoleillée" fill priority sizes="(max-width: 900px) 100vw, 48vw" />
       <div className="auth-story__wash" />
       <Link href="/" className="auth-brand auth-brand--light" aria-label="Quiosk, accueil">QUIOSK</Link>
-      <div className="auth-story__quote">
-        <p>« Lire, c’est voyager sans jamais quitter la lumière. »</p>
-        <span>La bibliothèque Quiosk</span>
-      </div>
-      <div className="auth-story__folio"><span>01</span><i /><span>24</span></div>
+      <div className="auth-story__quote"><p>« Lire, c’est voyager sans jamais quitter la lumière. »</p><span>Quiosk · Un monde à découvrir</span></div>
     </aside>
-
     <section className="auth-panel">
-      <div className="auth-panel__top">
-        <Link href="/" className="auth-back"><ArrowLeft aria-hidden="true" /> Retour à l’accueil</Link>
-        <span>Lecture · Culture · Curiosité</span>
-      </div>
-
+      <div className="auth-panel__top"><Link href="/" className="auth-back"><ArrowLeft aria-hidden="true" /> Retour à l’accueil</Link><span>LECTURE · CULTURE · CURIOSITÉ</span></div>
       <div className="auth-card">
-        <div className="auth-intro">
-          <p className="auth-eyebrow">{copy.eyebrow}</p>
-          <h1>{copy.title}<br /><em>{copy.emphasis}</em></h1>
+        <div className="auth-intro"><p className="auth-eyebrow">Votre espace Quiosk</p><h1>{mode === "login" ? "Reprenez votre lecture" : "Votre prochaine lecture"}<br /><em>{mode === "login" ? "là où vous l’avez laissée." : "commence ici."}</em></h1></div>
+        <div className="auth-tabs" role="group" aria-label="Connexion ou inscription">
+          <button type="button" aria-pressed={mode === "login"} onClick={() => changeMode("login")}>Connexion</button>
+          <button type="button" aria-pressed={mode === "signup"} onClick={() => changeMode("signup")}>Inscription</button>
         </div>
-
-        <div className="auth-tabs" role="tablist" aria-label="Choisir le formulaire">
-          <button type="button" role="tab" aria-selected={mode === "login"} onClick={() => switchMode("login")}>Connexion</button>
-          <button type="button" role="tab" aria-selected={mode === "signup"} onClick={() => switchMode("signup")}>Inscription</button>
-        </div>
-
-        <form className="auth-form" onSubmit={handleSubmit}>
-          {mode === "signup" && <div className="auth-field-row">
-            <label>Prénom<input name="firstName" type="text" autoComplete="given-name" placeholder="Nora" minLength={2} required /></label>
-            <label>Nom<input name="lastName" type="text" autoComplete="family-name" placeholder="Bensaïd" minLength={2} required /></label>
-          </div>}
-          <label>Adresse e-mail<input name="email" type="email" autoComplete="email" inputMode="email" placeholder="vous@exemple.com" value={email} onChange={(event) => setEmail(event.target.value)} required /></label>
-          <label>Mot de passe
-            <span className="auth-password">
-              <input name="password" type={passwordVisible ? "text" : "password"} autoComplete={mode === "login" ? "current-password" : "new-password"} placeholder={mode === "login" ? "Votre mot de passe" : "8 caractères minimum"} minLength={8} required />
-              <button type="button" onClick={() => setPasswordVisible((visible) => !visible)} aria-label={passwordVisible ? "Masquer le mot de passe" : "Afficher le mot de passe"}>{passwordVisible ? <EyeOff /> : <Eye />}</button>
-            </span>
-          </label>
-          {mode === "signup" && <label className="auth-consent"><input type="checkbox" required /><span>Je comprends que ce formulaire est une démonstration et ne crée pas encore de compte.</span></label>}
-          {mode === "login" && <div className="auth-form__options"><label className="auth-remember"><input type="checkbox" /><span>Se souvenir de moi</span></label><span title="Fonctionnalité à venir">Mot de passe oublié ? (bientôt)</span></div>}
-          <button className="auth-submit" type="submit">{copy.submit}<ArrowRight aria-hidden="true" /></button>
+        <form className="auth-form" onSubmit={submit}>
+          {mode === "signup" && <label>Nom complet<input name="name" type="text" minLength={2} maxLength={120} autoComplete="name" value={name} onChange={e => setName(e.target.value)} required /></label>}
+          <label>Adresse e-mail<input name="email" type="email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} required /></label>
+          <label>Mot de passe<span className="auth-password"><input name="password" type={visible ? "text" : "password"} autoComplete={mode === "signup" ? "new-password" : "current-password"} minLength={8} value={password} onChange={e => setPassword(e.target.value)} required /><button type="button" aria-label={visible ? "Masquer le mot de passe" : "Afficher le mot de passe"} onClick={() => setVisible(!visible)}>{visible ? <EyeOff /> : <Eye />}</button></span></label>
+          {error && <p role="alert" className="auth-error">{error}</p>}
+          <button className="auth-submit" type="submit" disabled={busy}>{busy ? "Veuillez patienter…" : mode === "login" ? "Se connecter" : "Créer mon compte"} <ArrowRight aria-hidden="true" /></button>
         </form>
-
-        <p className="auth-switch">{copy.foot} <button type="button" onClick={() => switchMode(mode === "login" ? "signup" : "login")}>{copy.switchLabel}</button></p>
-        <p className="auth-security"><LockKeyhole aria-hidden="true" /> Démonstration : aucune donnée n’est transmise à un serveur.</p>
-      </div>
-
-      <div className="auth-perks" aria-label="Avantages de votre compte">
-        {perks.map(([Icon, title, description]) => <article key={title}><Icon aria-hidden="true" /><div><h2>{title}</h2><p>{description}</p></div></article>)}
+        <p className="auth-switch">{mode === "login" ? "Nouveau sur Quiosk ?" : "Déjà membre ?"} <button type="button" onClick={() => changeMode(mode === "login" ? "signup" : "login")}>{mode === "login" ? "Créer un compte" : "Se connecter"}</button></p>
+        <p className="auth-security"><LockKeyhole aria-hidden="true" /> Votre session est gérée de manière sécurisée par Better Auth.</p>
       </div>
     </section>
   </main>;

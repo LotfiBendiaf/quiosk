@@ -1,0 +1,25 @@
+/* Secure role dashboards, Quiosk visual vocabulary. */
+.q-dashboard{padding:9rem 0 7rem;min-height:78vh;background:var(--cream)}
+.q-dashboard__wrap{width:min(1200px,calc(100% - 2.5rem));margin:auto}
+.q-dashboard__nav{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.q-dashboard__back,.q-dashboard__signout{font-size:.75rem;color:var(--plum)}
+.q-dashboard__signout{padding:.6rem 1rem;border:1px solid var(--border);border-radius:40px;background:transparent;cursor:pointer}
+.q-dashboard__eyebrow{margin:3rem 0 .8rem;color:var(--plum);text-transform:uppercase;letter-spacing:.15em;font-size:.7rem}
+.q-dashboard h1{font:400 clamp(3.4rem,7vw,7rem)/.95 var(--font-serif),serif;letter-spacing:-.035em;margin:0 0 1.2rem}
+.q-dashboard__lead{max-width:45rem;line-height:1.7;color:var(--muted);margin-bottom:3rem}
+.q-dashboard__cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.q-dashboard__cards article,.q-dashboard__form,.q-dashboard__listing{padding:clamp(1.5rem,3vw,2.5rem);border:1px solid var(--border);border-radius:18px;background:var(--ivory)}
+.q-dashboard__cards article>span{font-size:.68rem;color:var(--plum);text-transform:uppercase;letter-spacing:.08em}
+.q-dashboard__cards h2,.q-dashboard__form h2,.q-dashboard__listing h2{font:400 clamp(1.7rem,2.5vw,2.7rem) var(--font-serif),serif;margin:1.2rem 0}
+.q-dashboard__cards p,.q-dashboard__form p,.q-dashboard__listing p{font-size:.83rem;line-height:1.7;color:var(--muted)}
+.q-dashboard__cards a{display:inline-block;margin-top:1.5rem;color:var(--plum);font-size:.8rem;text-decoration:underline;text-underline-offset:4px}
+.q-dashboard__form{margin:2rem 0}.q-dashboard__form form{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.q-dashboard__form label{display:flex;flex-direction:column;gap:.6rem;font-size:.78rem}
+.q-dashboard__form label:has(textarea){grid-column:1/-1}
+.q-dashboard__form input,.q-dashboard__form textarea,.q-dashboard__form select{width:100%;padding:.85rem;border:1px solid var(--border);border-radius:8px;background:var(--cream);font:inherit;color:var(--brown)}
+.q-dashboard__form button{min-height:45px;width:max-content;border:0;border-radius:99px;padding:.8rem 1.4rem;background:var(--lavender);cursor:pointer}
+.q-dashboard__form button:disabled{opacity:.6}
+.q-dashboard__error{color:#9f2323!important}.q-dashboard__success{color:#25683d!important}
+.q-dashboard__listing ul{padding:0;list-style:none}.q-dashboard__listing li{display:flex;justify-content:space-between;gap:2rem;padding:1rem 0;border-bottom:1px solid var(--border)}
+.q-dashboard__listing li span{color:var(--muted);font-size:.75rem}
+@media(max-width:800px){.q-dashboard__cards{grid-template-columns:1fr}.q-dashboard__form form{grid-template-columns:1fr}.q-dashboard__listing li{flex-direction:column;gap:.3rem}}
