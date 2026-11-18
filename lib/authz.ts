@@ -1,7 +1,8 @@
 import "server-only";
 import { headers } from "next/headers";
-import { redirect, forbidden } from "next/navigation";
+import { redirect, notFound } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
 export const ROLES = ["client", "editor", "admin"] as const;
 export type UserRole = (typeof ROLES)[number];
@@ -14,7 +15,8 @@ export async function requireSession() {
 
 export async function requireRole(...allowed: UserRole[]) {
   const session = await requireSession();
-  const role = session.user.role as UserRole;
-  if (!allowed.includes(role)) forbidden();
+  const account = await prisma.user.findUnique({ where: { id: session.user.id }, select: { role: true } });
+  const role = account?.role as UserRole | undefined;
+  if (!role || !allowed.includes(role)) notFound();
   return session;
 }
