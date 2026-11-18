@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { LogOut } from "lucide-react";
 import { SiteHeader } from "@/components/quiosk";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SignOutButton } from "@/components/dashboard/sign-out-button";
