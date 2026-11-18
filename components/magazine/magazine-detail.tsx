@@ -38,12 +38,12 @@ export function MagazineDetail({ magazine }: { magazine: Magazine }) {
       <div className="qd-commerce">
         <div className="qd-commerce__heading"><span>Choisissez votre expérience</span><span>01 / 02</span></div>
         <div className="qd-options" role="radiogroup" aria-label="Mode d'acquisition du magazine">
-          <button type="button" role="radio" aria-checked={isIssue} className={`qd-option ${isIssue ? "is-active" : ""}`} onClick={() => setMode("issue")}>
+          <button type="button" aria-pressed={isIssue} className={`qd-option ${isIssue ? "is-active" : ""}`} onClick={() => setMode("issue")}>
             <span className="qd-option__top"><span className="qd-radio" aria-hidden="true">{isIssue && <Check size={12}/>}</span><span className="qd-option__name">Acheter ce numéro</span></span>
             <strong className="qd-option__price"><MarketPrice prices={magazine.prices} indicative /></strong>
             <span className="qd-option__hint">Un seul numéro, dans votre bibliothèque</span>
           </button>
-          <button type="button" role="radio" aria-checked={!isIssue} className={`qd-option ${!isIssue ? "is-active" : ""}`} onClick={() => setMode("subscription")}>
+          <button type="button" aria-pressed={!isIssue} className={`qd-option ${!isIssue ? "is-active" : ""}`} onClick={() => setMode("subscription")}>
             <span className="qd-option__top"><span className="qd-radio" aria-hidden="true">{!isIssue && <Check size={12}/>}</span><span className="qd-option__name">S’abonner</span></span>
             <strong className="qd-option__price"><MarketPrice prices={demoSubscriptionPrices} indicative /><small> / mois</small></strong>
             <span className="qd-option__hint">Formule d’abonnement à confirmer</span>
