@@ -104,13 +104,13 @@ export function AuthExperience() {
               <button type="button" onClick={() => setPasswordVisible((visible) => !visible)} aria-label={passwordVisible ? "Masquer le mot de passe" : "Afficher le mot de passe"}>{passwordVisible ? <EyeOff /> : <Eye />}</button>
             </span>
           </label>
-          {mode === "signup" && <label className="auth-consent"><input type="checkbox" required /><span>J’accepte les <a href="#conditions">conditions d’utilisation</a> et la <a href="#confidentialite">politique de confidentialité</a>.</span></label>}
-          {mode === "login" && <div className="auth-form__options"><label className="auth-remember"><input type="checkbox" /><span>Se souvenir de moi</span></label><a href="#mot-de-passe-oublie">Mot de passe oublié ?</a></div>}
+          {mode === "signup" && <label className="auth-consent"><input type="checkbox" required /><span>J’accepte les <a href="/a-propos">conditions d’utilisation</a> et la <a href="/a-propos">politique de confidentialité</a>.</span></label>}
+          {mode === "login" && <div className="auth-form__options"><label className="auth-remember"><input type="checkbox" /><span>Se souvenir de moi</span></label><span title="Fonctionnalité à venir">Mot de passe oublié ? (bientôt)</span></div>}
           <button className="auth-submit" type="submit">{copy.submit}<ArrowRight aria-hidden="true" /></button>
         </form>
 
         <p className="auth-switch">{copy.foot} <button type="button" onClick={() => switchMode(mode === "login" ? "signup" : "login")}>{copy.switchLabel}</button></p>
-        <p className="auth-security"><LockKeyhole aria-hidden="true" /> Vos données sont chiffrées et restent confidentielles.</p>
+        <p className="auth-security"><LockKeyhole aria-hidden="true" /> Démonstration : aucune donnée n’est transmise à un serveur.</p>
       </div>
 
       <div className="auth-perks" aria-label="Avantages de votre compte">
