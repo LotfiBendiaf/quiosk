@@ -72,7 +72,7 @@ export function SiteFooter() {
         <div className="q-footer__bottom">
           <span>© {new Date().getFullYear()} Quiosk. Tous droits réservés.</span>
           <span>Culture <span className="q-footer__dot">·</span> Lecture <span className="q-footer__dot">·</span> Curiosité</span>
-          <a href="#" className="q-footer__back-to-top">Retour en haut <ArrowUp size={14} aria-hidden="true" /></a>
+          <Link href="/#decouvrir" className="q-footer__back-to-top">Retour en haut <ArrowUp size={14} aria-hidden="true" /></Link>
         </div>
         <p className="q-footer__notice">Site en développement. Les magazines et tarifs de démonstration ne constituent pas des offres commerciales.</p>
       </EditorialContainer>
