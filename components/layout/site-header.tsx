@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Menu, Search, UserRound, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -29,7 +30,13 @@ export function SiteHeader({ embedded = false }: { embedded?: boolean }) {
     <header className={cn("q-header", embedded && "q-header--embedded", scrolled && "is-scrolled")}>
       <div className="q-header__inner">
         <Link href="/" className="q-wordmark" aria-label="Quiosk, accueil">
-          QUIOSK
+          <Image
+            src="/quiosk-logo1.svg"
+            alt="Quiosk — Books & Magazines"
+            width={3508}
+            height={1282}
+            priority
+          />
         </Link>
         <div className="q-header__right">
           <nav className={cn("q-nav", open && "is-open")} aria-label="Navigation principale">

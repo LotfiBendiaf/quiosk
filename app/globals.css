@@ -1777,6 +1777,10 @@ footer {
   display: block;
   width: 100%;
   height: auto;
+  object-fit: contain;
+}
+.footer-brand img {
+  filter: brightness(0) invert(1);
 }
 .footer-brand {
   display: block;

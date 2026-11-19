@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { EditorialContainer } from "@/components/editorial/primitives";
 
 export function SiteFooter() {
@@ -7,8 +8,13 @@ export function SiteFooter() {
       <EditorialContainer>
         <div className="q-footer__top">
           <div>
-            <Link className="q-footer__wordmark" href="/">
-              QUIOSK
+            <Link className="q-footer__wordmark" href="/" aria-label="Quiosk, accueil">
+              <Image
+                src="/quiosk-logo1.svg"
+                alt="Quiosk — Books & Magazines"
+                width={3508}
+                height={1282}
+              />
             </Link>
             <p>
               Le kiosque des regards

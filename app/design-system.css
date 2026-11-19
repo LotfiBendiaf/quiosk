@@ -268,9 +268,15 @@
 }
 .q-wordmark {
   grid-column: 2;
-  font-family: var(--font-serif);
-  font-size: 2.1rem;
-  letter-spacing: -0.055em;
+  display: block;
+  width: clamp(8.25rem, 11vw, 10.5rem);
+  line-height: 0;
+}
+.q-wordmark img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 .q-header__right {
   grid-column: 3;
@@ -343,9 +349,16 @@
   padding-bottom: clamp(4rem, 8vw, 8rem);
 }
 .q-footer__wordmark {
-  font-family: var(--font-serif);
-  font-size: clamp(4rem, 9vw, 9rem);
-  letter-spacing: -0.06em;
+  display: block;
+  width: min(100%, 34rem);
+  line-height: 0;
+}
+.q-footer__wordmark img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
 }
 .q-footer__top > div p {
   color: color-mix(in srgb, var(--on-dark) 62%, transparent);

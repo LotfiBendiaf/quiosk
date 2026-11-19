@@ -233,10 +233,10 @@ export function SiteHeader() {
       <header className="site-header">
         <Link href="/" className="brand" aria-label="Quiosk, accueil">
           <Image
-            src="/quiosk-logo.png"
+            src="/quiosk-logo1.svg"
             alt="Quiosk — Books & Magazines"
-            width={500}
-            height={100}
+            width={3508}
+            height={1282}
             className="h-10"
             priority
           />
@@ -356,10 +356,10 @@ export function SiteFooter() {
           <div>
             <Link href="/" className="footer-brand" aria-label="Quiosk, accueil">
               <Image
-                src="/quiosk-logo-dark.png"
+                src="/quiosk-logo1.svg"
                 alt="Quiosk — Books & Magazines"
-                width={1901}
-                height={537}
+                width={3508}
+                height={1282}
               />
             </Link>
             <p>
