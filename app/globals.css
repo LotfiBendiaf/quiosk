@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./design-system.css";
+@import "./footer.css";
 @import "./market.css";
 @import "./magazine-detail.css";
 @import "./cart.css";
