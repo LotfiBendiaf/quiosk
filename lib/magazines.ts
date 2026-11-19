@@ -1,23 +1,165 @@
 import type { MarketPrices } from "@/lib/markets";
 
-export type Magazine = { slug: string; title: string; issue: string; publisher: string; category: string; date: string; price?: number; prices?: MarketPrices; image: string; description: string; demoOnly?: boolean };
+export type Magazine = {
+  slug: string;
+  title: string;
+  issue: string;
+  publisher: string;
+  category: string;
+  date: string;
+  price?: number;
+  prices?: MarketPrices;
+  image: string;
+  description: string;
+  demoOnly?: boolean;
+};
 
 export const magazines: Magazine[] = [
-  { slug: "the-gentlewoman-42", title: "The Gentlewoman", issue: "N° 42 — Autumn & Winter", publisher: "Fantastic Man", category: "Mode", date: "12 novembre 2026", prices: { DZD: 1800, EUR: 14.9, USD: 16.9 }, image: "/images/The Gentlewoman.jpg", description: "Des portraits au long cours et une vision singulière de la création contemporaine.", demoOnly: true },
-  { slug: "wallpaper-june", title: "Wallpaper*", issue: "Juin — Global interiors", publisher: "Wallpaper", category: "Design", date: "6 novembre 2026", prices: { DZD: 2200, EUR: 18, USD: 20 }, image: "/images/Wallpaper Magazine June 2023 Cover (Wallpaper Magazine).jpg", description: "Architecture, art et design réunis dans un numéro à l'élégance radicale.", demoOnly: true },
-  { slug: "apartamento-35", title: "Apartamento", issue: "Issue 35 — Everyday interiors", publisher: "Apartamento", category: "Architecture", date: "28 octobre 2026", prices: { DZD: 2000, EUR: 16.5, USD: 18.5 }, image: "/images/Apartamento Apartamento, Issue 35 _ Pre-used design _ Franckly.jpg", description: "Des intérieurs vivants et les histoires intimes de celles et ceux qui les habitent.", demoOnly: true },
-  { slug: "cereal-volume-12", title: "Cereal", issue: "Volume 12 — Travel & style", publisher: "Cereal", category: "Voyage", date: "19 octobre 2026", prices: { DZD: 1900, EUR: 15, USD: 17 }, image: "/images/Cereal Travel & Lifestyle Magazine Volume 12 – Sportique.jpg", description: "Un regard calme sur le voyage, les lieux et les objets qui méritent le détour.", demoOnly: true },
-  { slug: "monocle-164", title: "Monocle", issue: "N° 164 — The entrepreneurs", publisher: "Monocle", category: "Business", date: "10 octobre 2026", prices: { DZD: 2100, EUR: 17, USD: 19 }, image: "/images/Monocle Abo sicher & einfach bestellen.jpg", description: "Affaires, villes et culture pour comprendre les idées qui font bouger le monde.", demoOnly: true },
-  { slug: "kinfolk-31", title: "Kinfolk", issue: "Volume 31 — Architecture", publisher: "Kinfolk", category: "Lifestyle", date: "2 octobre 2026", prices: { DZD: 2300, EUR: 19, USD: 21 }, image: "/images/Kinfolk Volume 31 - Teşvikiye Patika Kitabevi.jpg", description: "Une exploration sensible de l'espace, de la matière et de la vie quotidienne.", demoOnly: true },
-  { slug: "the-independent-reader", title: "The Independent Reader", issue: "N° 08 — New perspectives", publisher: "Independent Press", category: "Art & Culture", date: "25 septembre 2026", prices: { DZD: 1600, EUR: 13.5, USD: 15 }, image: "/images/Pics & Ink - an online newsstand to buy independent magazines.jpg", description: "Une sélection visuelle de voix indépendantes et d'idées inattendues.", demoOnly: true },
-  { slug: "future-tactile", title: "Future Tactile", issue: "N° 03 — Human machines", publisher: "Materia", category: "Technologie", date: "18 septembre 2026", prices: { DZD: 2200, EUR: 18.5, USD: 20.5 }, image: "/images/A1iiLPi1rL-785x1024.jpg", description: "La technologie racontée par les usages, les gestes et les imaginaires.", demoOnly: true },
+  {
+    slug: "the-gentlewoman-42",
+    title: "The Gentlewoman",
+    issue: "N° 42 — Autumn & Winter",
+    publisher: "Fantastic Man",
+    category: "Mode",
+    date: "12 novembre 2026",
+    prices: { DZD: 1800, EUR: 14.9, USD: 16.9 },
+    image: "/images/The Gentlewoman.jpg",
+    description:
+      "Des portraits au long cours et une vision singulière de la création contemporaine.",
+    demoOnly: true,
+  },
+  {
+    slug: "wallpaper-june",
+    title: "Wallpaper*",
+    issue: "Juin — Global interiors",
+    publisher: "Wallpaper",
+    category: "Design",
+    date: "6 novembre 2026",
+    prices: { DZD: 2200, EUR: 18, USD: 20 },
+    image: "/images/Wallpaper Magazine June 2023 Cover (Wallpaper Magazine).jpg",
+    description: "Architecture, art et design réunis dans un numéro à l'élégance radicale.",
+    demoOnly: true,
+  },
+  {
+    slug: "apartamento-35",
+    title: "Apartamento",
+    issue: "Issue 35 — Everyday interiors",
+    publisher: "Apartamento",
+    category: "Architecture",
+    date: "28 octobre 2026",
+    prices: { DZD: 2000, EUR: 16.5, USD: 18.5 },
+    image: "/images/Apartamento Apartamento, Issue 35 _ Pre-used design _ Franckly.jpg",
+    description:
+      "Des intérieurs vivants et les histoires intimes de celles et ceux qui les habitent.",
+    demoOnly: true,
+  },
+  {
+    slug: "cereal-volume-12",
+    title: "Cereal",
+    issue: "Volume 12 — Travel & style",
+    publisher: "Cereal",
+    category: "Voyage",
+    date: "19 octobre 2026",
+    prices: { DZD: 1900, EUR: 15, USD: 17 },
+    image: "/images/Cereal Travel & Lifestyle Magazine Volume 12 – Sportique.jpg",
+    description: "Un regard calme sur le voyage, les lieux et les objets qui méritent le détour.",
+    demoOnly: true,
+  },
+  {
+    slug: "monocle-164",
+    title: "Monocle",
+    issue: "N° 164 — The entrepreneurs",
+    publisher: "Monocle",
+    category: "Business",
+    date: "10 octobre 2026",
+    prices: { DZD: 2100, EUR: 17, USD: 19 },
+    image: "/images/Monocle Abo sicher & einfach bestellen.jpg",
+    description: "Affaires, villes et culture pour comprendre les idées qui font bouger le monde.",
+    demoOnly: true,
+  },
+  {
+    slug: "kinfolk-31",
+    title: "Kinfolk",
+    issue: "Volume 31 — Architecture",
+    publisher: "Kinfolk",
+    category: "Lifestyle",
+    date: "2 octobre 2026",
+    prices: { DZD: 2300, EUR: 19, USD: 21 },
+    image: "/images/Kinfolk Volume 31 - Teşvikiye Patika Kitabevi.jpg",
+    description: "Une exploration sensible de l'espace, de la matière et de la vie quotidienne.",
+    demoOnly: true,
+  },
+  {
+    slug: "the-independent-reader",
+    title: "The Independent Reader",
+    issue: "N° 08 — New perspectives",
+    publisher: "Independent Press",
+    category: "Art & Culture",
+    date: "25 septembre 2026",
+    prices: { DZD: 1600, EUR: 13.5, USD: 15 },
+    image: "/images/Pics & Ink - an online newsstand to buy independent magazines.jpg",
+    description: "Une sélection visuelle de voix indépendantes et d'idées inattendues.",
+    demoOnly: true,
+  },
+  {
+    slug: "future-tactile",
+    title: "Future Tactile",
+    issue: "N° 03 — Human machines",
+    publisher: "Materia",
+    category: "Technologie",
+    date: "18 septembre 2026",
+    prices: { DZD: 2200, EUR: 18.5, USD: 20.5 },
+    image: "/images/A1iiLPi1rL-785x1024.jpg",
+    description: "La technologie racontée par les usages, les gestes et les imaginaires.",
+    demoOnly: true,
+  },
 ];
 
 export const algerianEditions: Magazine[] = [
-  { slug: "oran-mediterranee", title: "Oran Méditerranée", issue: "Architecture et horizon", publisher: "Quiosk Studio", category: "Architecture", date: "Édition spéciale", image: "/images/Oran Méditerranée_ Architecture and Horizon-2.png", description: "Une promenade solaire entre modernisme, corniche et horizons méditerranéens.", demoOnly: true },
-  { slug: "heritage-algerie", title: "Héritage d’Algérie", issue: "Artisanat et mémoire", publisher: "Quiosk Studio", category: "Art & Culture", date: "Édition spéciale", image: "/images/Algerian Heritage_ Craft and Memory-1.png", description: "Gestes transmis, matières précieuses et récits de mémoire.", demoOnly: true },
-  { slug: "eclat", title: "Éclat", issue: "Mode algérienne contemporaine", publisher: "Quiosk Studio", category: "Mode", date: "Édition spéciale", image: "/images/Éclat_ Contemporary Algerian Fashion-3.png", description: "Une nouvelle garde créative entre héritage et lignes contemporaines.", demoOnly: true },
-  { slug: "demeures", title: "Demeures", issue: "Élégance intérieure algérienne", publisher: "Quiosk Studio", category: "Design", date: "Édition spéciale", image: "/images/Demeures_ Algérien Interior Elegance-4.png", description: "Des intérieurs habités par la lumière, le savoir-faire et le temps.", demoOnly: true },
+  {
+    slug: "oran-mediterranee",
+    title: "Oran Méditerranée",
+    issue: "Architecture et horizon",
+    publisher: "Quiosk Studio",
+    category: "Architecture",
+    date: "Édition spéciale",
+    image: "/images/Oran Méditerranée_ Architecture and Horizon-2.png",
+    description: "Une promenade solaire entre modernisme, corniche et horizons méditerranéens.",
+    demoOnly: true,
+  },
+  {
+    slug: "heritage-algerie",
+    title: "Héritage d’Algérie",
+    issue: "Artisanat et mémoire",
+    publisher: "Quiosk Studio",
+    category: "Art & Culture",
+    date: "Édition spéciale",
+    image: "/images/Algerian Heritage_ Craft and Memory-1.png",
+    description: "Gestes transmis, matières précieuses et récits de mémoire.",
+    demoOnly: true,
+  },
+  {
+    slug: "eclat",
+    title: "Éclat",
+    issue: "Mode algérienne contemporaine",
+    publisher: "Quiosk Studio",
+    category: "Mode",
+    date: "Édition spéciale",
+    image: "/images/Éclat_ Contemporary Algerian Fashion-3.png",
+    description: "Une nouvelle garde créative entre héritage et lignes contemporaines.",
+    demoOnly: true,
+  },
+  {
+    slug: "demeures",
+    title: "Demeures",
+    issue: "Élégance intérieure algérienne",
+    publisher: "Quiosk Studio",
+    category: "Design",
+    date: "Édition spéciale",
+    image: "/images/Demeures_ Algérien Interior Elegance-4.png",
+    description: "Des intérieurs habités par la lumière, le savoir-faire et le temps.",
+    demoOnly: true,
+  },
 ];
 
 export const getMagazine = (slug: string) => magazines.find((magazine) => magazine.slug === slug);

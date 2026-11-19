@@ -9,5 +9,13 @@ export const metadata: Metadata = {
 };
 
 export default function AuthPage() {
-  return <Suspense fallback={<main className="auth-shell auth-shell--loading" aria-label="Chargement de votre espace" />}><AuthExperience /></Suspense>;
+  return (
+    <Suspense
+      fallback={
+        <main className="auth-shell auth-shell--loading" aria-label="Chargement de votre espace" />
+      }
+    >
+      <AuthExperience />
+    </Suspense>
+  );
 }

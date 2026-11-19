@@ -17,7 +17,11 @@ export function parseCart(value: string | null): CartItem[] {
       const entry = item as Record<string, unknown>;
       if (entry.kind === "subscription") {
         unique.set(SUBSCRIPTION_KEY, { key: SUBSCRIPTION_KEY, kind: "subscription", quantity: 1 });
-      } else if (entry.kind === "issue" && typeof entry.slug === "string" && magazines.some(m => m.slug === entry.slug)) {
+      } else if (
+        entry.kind === "issue" &&
+        typeof entry.slug === "string" &&
+        magazines.some((m) => m.slug === entry.slug)
+      ) {
         const key = `issue:${entry.slug}`;
         unique.set(key, { key, kind: "issue", slug: entry.slug, quantity: 1 });
       }
@@ -30,10 +34,12 @@ export function parseCart(value: string | null): CartItem[] {
 export function itemPrice(item: CartItem, market: MarketId): number | null {
   const currency = MARKETS[market].currency;
   if (item.kind === "subscription") return demoSubscriptionPrices[currency] ?? null;
-  const issue = magazines.find(m => m.slug === item.slug);
+  const issue = magazines.find((m) => m.slug === item.slug);
   return issue?.prices?.[currency] ?? null;
 }
 export function cartTotal(items: CartItem[], market: MarketId): number | null {
-  const prices = items.map(item => itemPrice(item, market));
-  return prices.some(v => v === null) ? null : prices.reduce<number>((total, price) => total + (price ?? 0), 0);
+  const prices = items.map((item) => itemPrice(item, market));
+  return prices.some((v) => v === null)
+    ? null
+    : prices.reduce<number>((total, price) => total + (price ?? 0), 0);
 }

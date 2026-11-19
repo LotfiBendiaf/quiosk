@@ -1,13 +1,25 @@
 "use client";
 
 import { createContext, useContext, useSyncExternalStore, type ReactNode } from "react";
-import { DEFAULT_MARKET, isMarketId, MARKETS, MARKET_STORAGE_KEY, type MarketId } from "@/lib/markets";
+import {
+  DEFAULT_MARKET,
+  isMarketId,
+  MARKETS,
+  MARKET_STORAGE_KEY,
+  type MarketId,
+} from "@/lib/markets";
 
 type MarketContextValue = { market: MarketId; setMarket: (value: MarketId) => void };
 const MarketContext = createContext<MarketContextValue | null>(null);
 const MARKET_CHANGE_EVENT = "quiosk:market-change";
 
-export function MarketProvider({ initialMarket = DEFAULT_MARKET, children }: { initialMarket?: MarketId; children: ReactNode }) {
+export function MarketProvider({
+  initialMarket = DEFAULT_MARKET,
+  children,
+}: {
+  initialMarket?: MarketId;
+  children: ReactNode;
+}) {
   const market = useSyncExternalStore(
     (onStoreChange) => {
       window.addEventListener("storage", onStoreChange);
@@ -29,7 +41,11 @@ export function MarketProvider({ initialMarket = DEFAULT_MARKET, children }: { i
     window.dispatchEvent(new Event(MARKET_CHANGE_EVENT));
   }
 
-  return <MarketContext.Provider value={{ market, setMarket: selectMarket }}>{children}</MarketContext.Provider>;
+  return (
+    <MarketContext.Provider value={{ market, setMarket: selectMarket }}>
+      {children}
+    </MarketContext.Provider>
+  );
 }
 
 export function useMarket() {
@@ -38,11 +54,27 @@ export function useMarket() {
   return value;
 }
 
-export function MarketPrice({ prices, indicative = false }: { prices?: Partial<Record<"DZD" | "EUR" | "USD", number>>; indicative?: boolean }) {
+export function MarketPrice({
+  prices,
+  indicative = false,
+}: {
+  prices?: Partial<Record<"DZD" | "EUR" | "USD", number>>;
+  indicative?: boolean;
+}) {
   const { market } = useMarket();
   const { currency, locale } = MARKETS[market];
   const value = prices?.[currency];
   if (value == null) return <span>Prix non renseigné</span>;
-  const formatted = new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 2 }).format(value);
-  return <span>{indicative && <span className="sr-only">Prix de démonstration : </span>}{formatted}{indicative && <span className="market-demo-suffix"> · démo</span>}</span>;
+  const formatted = new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency,
+    maximumFractionDigits: 2,
+  }).format(value);
+  return (
+    <span>
+      {indicative && <span className="sr-only">Prix de démonstration : </span>}
+      {formatted}
+      {indicative && <span className="market-demo-suffix"> · démo</span>}
+    </span>
+  );
 }

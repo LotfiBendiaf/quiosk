@@ -13,5 +13,9 @@ export const isMarketId = (value: unknown): value is MarketId =>
   typeof value === "string" && Object.prototype.hasOwnProperty.call(MARKETS, value);
 export function formatMarketPrice(amount: number, market: MarketId): string {
   const { currency, locale } = MARKETS[market];
-  return new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 2 }).format(amount);
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency,
+    maximumFractionDigits: 2,
+  }).format(amount);
 }

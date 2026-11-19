@@ -5,5 +5,19 @@ import { EditorialContainer } from "@/components/editorial/primitives";
 
 export const metadata: Metadata = { title: "Mon panier" };
 export default function CartPage() {
-  return <><SiteHeader /><main className="qc-page"><EditorialContainer><p className="qc-eyebrow">Votre bibliothèque commence ici</p><h1>Mon <em>panier.</em></h1><CartSummary /></EditorialContainer></main><SiteFooter /></>;
+  return (
+    <>
+      <SiteHeader />
+      <main className="qc-page">
+        <EditorialContainer>
+          <p className="qc-eyebrow">Votre bibliothèque commence ici</p>
+          <h1>
+            Mon <em>panier.</em>
+          </h1>
+          <CartSummary />
+        </EditorialContainer>
+      </main>
+      <SiteFooter />
+    </>
+  );
 }
