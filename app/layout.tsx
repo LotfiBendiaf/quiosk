@@ -3,6 +3,7 @@ import { Geist, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { MarketProvider } from "@/components/market/market-provider";
 import { CartProvider } from "@/components/cart/cart-provider";
+import { CookieConsentManager } from "@/components/privacy/cookie-consent";
 
 const sans = Geist({ variable: "--font-geist", subsets: ["latin"] });
 const serif = Instrument_Serif({
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MarketProvider>
           <CartProvider>{children}</CartProvider>
         </MarketProvider>
+        <CookieConsentManager />
       </body>
     </html>
   );
